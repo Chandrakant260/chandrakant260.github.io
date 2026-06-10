@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chandra Kitchen</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="hero">
+    <h1>🍱 Chandra Kitchen</h1>
+    <p>Fresh • Homemade • Hygienic</p>
+</header>
+
+<section>
+    <h2 class="section-title">Popular Today</h2>
+    <div id="menu-container"></div>
+</section>
+
+<section class="cart-section">
+    <h2>Your Cart</h2>
+
+    <div id="cart-items"></div>
+
+    <div class="bill-row">
+        <span>Subtotal</span>
+        <span>₹<span id="subtotal">0</span></span>
+    </div>
+
+    <div class="bill-row">
+        <span>Packaging</span>
+        <span>₹<span id="packaging">0</span></span>
+    </div>
+
+    <div class="bill-row">
+        <span>Delivery Type</span>
+
+        <select id="deliveryType">
+            <option value="pickup">Pickup</option>
+            <option value="delivery">Delivery</option>
+        </select>
+    </div>
+
+    <div class="bill-row">
+        <span>Delivery</span>
+        <span>₹<span id="delivery">0</span></span>
+    </div>
+
+    <div class="bill-row total">
+        <span>Total</span>
+        <span>₹<span id="total">0</span></span>
+    </div>
+
+    <button class="checkout-btn" onclick="placeOrder()">
+        Order on WhatsApp
+    </button>
+
+</section>
+
+<section class="customer-section">
+    <h2>Customer Details</h2>
+
+    <input
+            type="text"
+            id="customerName"
+            placeholder="Your Name"
+            required>
+
+    <input
+            type="tel"
+            id="customerMobile"
+            placeholder="Mobile Number"
+            required>
+
+    <textarea
+            id="customerAddress"
+            placeholder="Delivery Address"
+            rows="3"></textarea>
+
+            <button onclick="getCurrentLocation()">
+                📍 Use Current Location
+            </button>
+
+    <textarea
+            id="customerDescription"
+            placeholder="Special Instructions (Less spicy, extra chutney, landmark, etc.)"
+            rows="3"></textarea>
+</section>
+
+<div id="stickyCart" class="sticky-cart hidden">
+    <span id="cartSummary">0 Items</span>
+    <span>₹<span id="stickyTotal">0</span></span>
+</div>
+
+<script src="js/menu.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
