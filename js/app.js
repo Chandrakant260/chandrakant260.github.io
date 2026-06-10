@@ -1,35 +1,49 @@
 const cart = {};
 
+let menu = [];
+
+const MENU_API =
+    "YOUR_GOOGLE_APPS_SCRIPT_URL";
+
 const PACKAGING_CHARGE = 15;
 const DELIVERY_CHARGE = 30;
 
-renderMenu();
+loadMenu();
 
 document
     .getElementById("deliveryType")
     .addEventListener("change", refreshCart);
 
+
 function renderMenu() {
 
     const container =
-        document.getElementById("menu-container");
+        document.getElementById(
+            "menu-container"
+        );
+
+    container.innerHTML = "";
 
     menu.forEach(item => {
 
         const card =
             document.createElement("div");
 
-        card.className = "food-card";
+        card.className =
+            "food-card";
 
         card.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
+            <img
+                src="${item.image}"
+                alt="${item.name}">
 
             <div class="food-info">
                 <h3>${item.name}</h3>
                 <p>₹${item.price}</p>
             </div>
 
-            <button onclick="addToCart(${item.id})">
+            <button
+                onclick="addToCart(${item.id})">
                 Add
             </button>
         `;
@@ -201,4 +215,35 @@ function getCurrentLocation() {
         document.getElementById("customerAddress").value =
             `https://maps.google.com/?q=${lat},${lng}`;
     });
+}
+
+
+async function loadMenu() {
+
+    try {
+
+        const response =
+            await fetch(MENU_API);
+
+        menu =
+            await response.json();
+
+        menu =
+            menu.filter(
+                item =>
+                    item.active === true ||
+                    item.active === "TRUE"
+            );
+
+        renderMenu();
+
+    } catch (e) {
+
+        console.error(e);
+
+        document
+            .getElementById("menu-container")
+            .innerHTML =
+            "<p>Unable to load menu.</p>";
+    }
 }
