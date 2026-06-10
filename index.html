@@ -1,108 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Chandra Kitchen</title>
+    <title>Soulful Meals</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
+<!-- Header -->
 <header class="hero">
-    <h1>🍱 Chandra Kitchen</h1>
-    <p>Fresh • Homemade • Hygienic</p>
+
+    <div class="hero-content">
+        <h1>🍱 Soulful Meals</h1>
+        <p>Healthy Home-Style Food • Freshly Prepared Daily</p>
+    </div>
+
+    <div class="hero-badge">
+        WhatsApp Orders
+    </div>
+
 </header>
 
-<section>
-    <h2 class="section-title">Popular Today</h2>
-    <div id="menu-container"></div>
-</section>
+<!-- Main Layout -->
+<div class="main-layout">
 
-<section class="cart-section">
-    <h2>Your Cart</h2>
+    <!-- MENU -->
+    <section class="menu-panel">
 
-    <div id="cart-items"></div>
+        <div class="toolbar">
 
-    <div class="bill-row">
-        <span>Subtotal</span>
-        <span>₹<span id="subtotal">0</span></span>
-    </div>
+            <input
+                    type="text"
+                    id="searchBox"
+                    placeholder="🔍 Search dishes...">
 
-    <div class="bill-row">
-        <span>Packaging</span>
-        <span>₹<span id="packaging">0</span></span>
-    </div>
+            <div id="categories"
+                 class="category-container">
+            </div>
 
-    <div class="bill-row">
-        <span>Delivery Type</span>
+        </div>
 
-        <select id="deliveryType">
-            <option value="pickup">Pickup</option>
-            <option value="delivery">Delivery</option>
-        </select>
-    </div>
+        <!-- Mobile: selected items visible on page -->
+<!--        <div class="page-cart mobile-only" id="pageCartPanel">-->
 
-    <div class="bill-row">
-        <span>Delivery</span>
-        <span>₹<span id="delivery">0</span></span>
-    </div>
+<!--            <h2 class="section-title">Your Order</h2>-->
 
-    <div class="bill-row total">
-        <span>Total</span>
-        <span>₹<span id="total">0</span></span>
-    </div>
+<!--            <div id="page-cart-items" class="page-cart-list">-->
+<!--                <div class="empty-cart">No items added yet</div>-->
+<!--            </div>-->
 
-    <button class="checkout-btn" onclick="placeOrder()">
-        Order on WhatsApp
-    </button>
+<!--            <div class="mobile-checkout-footer" id="pageCartFooter" hidden>-->
 
-</section>
+<!--                <div class="mobile-checkout-summary">-->
 
-<section class="customer-section">
-    <h2>Customer Details</h2>
+<!--                    <div>-->
+<!--                        <span id="pageCartCount">0</span> items-->
+<!--                    </div>-->
 
-    <input
-            type="text"
-            id="customerName"
-            placeholder="Your Name"
-            required>
+<!--                    <strong>-->
+<!--                        ₹<span id="pageCartTotal">0</span>-->
+<!--                    </strong>-->
 
-    <input
-            type="tel"
-            id="customerMobile"
-            placeholder="Mobile Number"
-            required>
+<!--                </div>-->
 
-    <textarea
-            id="customerAddress"
-            placeholder="Delivery Address"
-            rows="3"></textarea>
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="mobile-checkout-btn"-->
+<!--                        onclick="openMobileCheckout()">-->
 
-            <button onclick="getCurrentLocation()">
-                📍 Use Current Location
+<!--                    Checkout →-->
+
+<!--                </button>-->
+
+<!--            </div>-->
+
+<!--            <div class="page-location mobile-only">-->
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="location-btn location-btn-compact"-->
+<!--                        id="pageLocationBtn"-->
+<!--                        onclick="getCurrentLocation(true)">-->
+<!--                    <span class="location-btn-icon">📍</span>-->
+<!--                    <span class="location-btn-text">-->
+<!--                        <strong>Use my current location</strong>-->
+<!--                        <small>For delivery — adds a Google Maps pin</small>-->
+<!--                    </span>-->
+<!--                </button>-->
+<!--                <span id="pageLocationStatus" class="field-hint"></span>-->
+<!--            </div>-->
+
+<!--        </div>-->
+
+        <h2 class="section-title">
+            Today's Menu
+        </h2>
+
+        <div id="menu-container">
+            <!-- Dynamic Menu -->
+        </div>
+
+    </section>
+
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar desktop-only">
+
+        <div class="cart-section">
+
+            <h2>Your Order</h2>
+
+            <div id="cart-items">
+
+                <div class="empty-cart">
+                    Cart is empty
+                </div>
+
+            </div>
+
+            <hr class="section-divider">
+
+            <div class="bill-row">
+                <span>Subtotal</span>
+                <span>₹<span id="subtotal">0</span></span>
+            </div>
+
+            <div class="bill-row">
+                <span>Packaging</span>
+                <span>₹<span id="packaging">0</span></span>
+            </div>
+
+            <div class="bill-row">
+                <span>Delivery Type</span>
+                <select id="deliveryType">
+                    <option value="pickup">Pickup</option>
+                    <option value="delivery">Delivery</option>
+                </select>
+            </div>
+
+            <div class="bill-row">
+                <span>Delivery Charge</span>
+                <span>₹<span id="delivery">0</span></span>
+            </div>
+
+            <div class="bill-row total-row">
+                <span>Total</span>
+                <span>₹<span id="total">0</span></span>
+            </div>
+
+        </div>
+
+        <div class="customer-section">
+
+            <h2>Customer Details</h2>
+
+            <div class="form-group">
+                <label for="customerName">Your Name</label>
+                <input
+                        type="text"
+                        id="customerName"
+                        placeholder="e.g. Priya Sharma"
+                        autocomplete="name">
+            </div>
+
+            <div class="form-group">
+                <label for="customerMobile">WhatsApp Number</label>
+                <input
+                        type="tel"
+                        id="customerMobile"
+                        placeholder="10-digit mobile number"
+                        inputmode="tel"
+                        autocomplete="tel">
+                <span class="field-hint">We'll send your order confirmation here</span>
+            </div>
+
+            <div class="form-group" id="addressGroup">
+                <label for="customerAddress">
+                    Delivery Address
+                    <span class="optional-tag">optional</span>
+                </label>
+                <span class="field-hint address-hint">Optional for pickup — use if you want to share location</span>
+                <textarea
+                        id="customerAddress"
+                        rows="3"
+                        placeholder="House no., street, landmark, area..."></textarea>
+
+                <button
+                        type="button"
+                        class="location-btn"
+                        id="locationBtn"
+                        onclick="getCurrentLocation()">
+                    <span class="location-btn-icon">📍</span>
+                    <span class="location-btn-text">
+                        <strong>Use my current location</strong>
+                        <small>Attaches a Google Maps pin to your order</small>
+                    </span>
+                </button>
+
+                <span id="locationStatus" class="field-hint"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="customerDescription">
+                    Special Instructions
+                    <span class="optional-tag">optional</span>
+                </label>
+                <textarea
+                        id="customerDescription"
+                        rows="2"
+                        placeholder="e.g. less spicy, ring the doorbell, leave at gate..."></textarea>
+                <span class="field-hint">Any notes for preparation or delivery</span>
+            </div>
+
+            <button
+                    type="button"
+                    class="checkout-btn"
+                    onclick="placeOrder()">
+                Order on WhatsApp
             </button>
 
-    <textarea
-            id="customerDescription"
-            placeholder="Special Instructions (Less spicy, extra chutney, landmark, etc.)"
-            rows="3"></textarea>
-</section>
+        </div>
 
-<div id="stickyCart" class="sticky-cart hidden">
-    <span id="cartSummary">0 Items</span>
-    <span>₹<span id="stickyTotal">0</span></span>
+    </aside>
+
+</div>
+
+<!-- MOBILE CHECKOUT DRAWER -->
+<div id="mobileOverlay" class="mobile-overlay" hidden>
+    <div class="mobile-drawer">
+
+        <div class="drawer-header">
+            <h2>Your Order</h2>
+            <button
+                    type="button"
+                    class="drawer-close"
+                    onclick="closeMobileCheckout()"
+                    aria-label="Close">
+                ✕
+            </button>
+        </div>
+
+        <div class="drawer-body">
+
+            <div id="mobile-cart-items" class="drawer-cart">
+                <div class="empty-cart">Cart is empty</div>
+            </div>
+
+            <hr class="section-divider">
+
+            <div class="bill-summary">
+                <div class="bill-row">
+                    <span>Subtotal</span>
+                    <span>₹<span id="mobileSubtotal">0</span></span>
+                </div>
+                <div class="bill-row">
+                    <span>Packaging</span>
+                    <span>₹<span id="mobilePackaging">0</span></span>
+                </div>
+                <div class="bill-row">
+                    <span>Delivery Type</span>
+                    <select id="mobileDeliveryType">
+                        <option value="pickup">Pickup</option>
+                        <option value="delivery">Delivery</option>
+                    </select>
+                </div>
+                <div class="bill-row">
+                    <span>Delivery Charge</span>
+                    <span>₹<span id="mobileDelivery">0</span></span>
+                </div>
+                <div class="bill-row total-row">
+                    <span>Total</span>
+                    <span>₹<span id="mobileTotal">0</span></span>
+                </div>
+            </div>
+
+            <div class="customer-section drawer-customer">
+
+                <h3>Customer Details</h3>
+
+                <div class="form-group">
+                    <label for="mobileCustomerName">Your Name</label>
+                    <input
+                            type="text"
+                            id="mobileCustomerName"
+                            placeholder="e.g. Priya Sharma"
+                            autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="mobileCustomerMobile">WhatsApp Number</label>
+                    <input
+                            type="tel"
+                            id="mobileCustomerMobile"
+                            placeholder="10-digit mobile number"
+                            inputmode="tel"
+                            autocomplete="tel">
+                </div>
+
+                <div class="form-group" id="mobileAddressGroup">
+                    <label for="mobileCustomerAddress">
+                        Delivery Address
+                        <span class="optional-tag">optional</span>
+                    </label>
+                    <span class="field-hint address-hint">Optional for pickup — use if you want to share location</span>
+                    <textarea
+                            id="mobileCustomerAddress"
+                            rows="3"
+                            placeholder="House no., street, landmark, area..."></textarea>
+
+                    <button
+                            type="button"
+                            class="location-btn"
+                            id="mobileLocationBtn"
+                            onclick="getCurrentLocation(true)">
+                        <span class="location-btn-icon">📍</span>
+                        <span class="location-btn-text">
+                            <strong>Use my current location</strong>
+                            <small>Attaches a Google Maps pin</small>
+                        </span>
+                    </button>
+
+                    <span id="mobileLocationStatus" class="field-hint"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobileCustomerDescription">
+                        Special Instructions
+                        <span class="optional-tag">optional</span>
+                    </label>
+                    <textarea
+                            id="mobileCustomerDescription"
+                            rows="2"
+                            placeholder="e.g. less spicy, ring the doorbell..."></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="drawer-footer">
+            <button
+                    type="button"
+                    class="checkout-btn"
+                    onclick="placeOrder(true)">
+                Order on WhatsApp — ₹<span id="mobileFooterTotal">0</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Mobile Floating Cart Bar -->
+<div
+        class="mobile-cart-bar mobile-only"
+        id="mobileCartBar"
+        hidden
+        onclick="openMobileCheckout()">
+
+    <div class="cart-bar-info">
+
+        <span class="cart-bar-count">
+            <span id="mobileTotalItems">0</span> items
+        </span>
+
+        <span class="cart-bar-total">
+            ₹<span id="mobileTotalPrice">0</span>
+        </span>
+
+    </div>
+
+    <span class="cart-bar-cta">
+        View Cart →
+    </span>
+
 </div>
 
 <script src="js/app.js"></script>
 
 </body>
-
 </html>
