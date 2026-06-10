@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Soulful Meals</title>
+    <title>The Soulful Meals</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
 <header class="hero">
 
     <div class="hero-content">
-        <h1>🍱 Soulful Meals</h1>
+        <h1>🍱 The Soulful Meals</h1>
         <p>Healthy Home-Style Food • Freshly Prepared Daily</p>
     </div>
 
-    <div class="hero-badge">
-        WhatsApp Orders
-    </div>
+<!--    <div class="hero-badge">-->
+<!--        WhatsApp Orders-->
+<!--    </div>-->
 
 </header>
 
@@ -134,17 +134,24 @@
                 <span>₹<span id="packaging">0</span></span>
             </div>
 
+            <input
+                    type="hidden"
+                    id="deliveryType"
+                    value="delivery">
+
             <div class="bill-row">
-                <span>Delivery Type</span>
-                <select id="deliveryType">
-                    <option value="pickup">Pickup</option>
-                    <option value="delivery">Delivery</option>
-                </select>
+                <span>Delivery</span>
+                <span>Standard Delivery</span>
             </div>
 
             <div class="bill-row">
                 <span>Delivery Charge</span>
                 <span>₹<span id="delivery">0</span></span>
+            </div>
+
+            <div
+                    id="deliveryMessage"
+                    class="delivery-message">
             </div>
 
             <div class="bill-row total-row">
@@ -181,9 +188,9 @@
             <div class="form-group" id="addressGroup">
                 <label for="customerAddress">
                     Delivery Address
-                    <span class="optional-tag">optional</span>
+<!--                    <span class="optional-tag">optional</span>-->
                 </label>
-                <span class="field-hint address-hint">Optional for pickup — use if you want to share location</span>
+                <span class="field-hint address-hint">Please provide your address or share your current location</span>
                 <textarea
                         id="customerAddress"
                         rows="3"
@@ -261,17 +268,25 @@
                     <span>Packaging</span>
                     <span>₹<span id="mobilePackaging">0</span></span>
                 </div>
+                <input
+                        type="hidden"
+                        id="mobileDeliveryType"
+                        value="delivery">
+
                 <div class="bill-row">
-                    <span>Delivery Type</span>
-                    <select id="mobileDeliveryType">
-                        <option value="pickup">Pickup</option>
-                        <option value="delivery">Delivery</option>
-                    </select>
+                    <span>Delivery</span>
+                    <span>Standard Delivery</span>
                 </div>
                 <div class="bill-row">
                     <span>Delivery Charge</span>
                     <span>₹<span id="mobileDelivery">0</span></span>
                 </div>
+
+                <div
+                        id="mobileDeliveryMessage"
+                        class="delivery-message">
+                </div>
+
                 <div class="bill-row total-row">
                     <span>Total</span>
                     <span>₹<span id="mobileTotal">0</span></span>
@@ -306,7 +321,7 @@
                         Delivery Address
                         <span class="optional-tag">optional</span>
                     </label>
-                    <span class="field-hint address-hint">Optional for pickup — use if you want to share location</span>
+                    <span class="field-hint address-hint">Please provide your address or share your current location</span>
                     <textarea
                             id="mobileCustomerAddress"
                             rows="3"
@@ -330,7 +345,7 @@
                 <div class="form-group">
                     <label for="mobileCustomerDescription">
                         Special Instructions
-                        <span class="optional-tag">optional</span>
+<!--                        <span class="optional-tag">optional</span>-->
                     </label>
                     <textarea
                             id="mobileCustomerDescription"

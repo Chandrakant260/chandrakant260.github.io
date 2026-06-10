@@ -5,26 +5,26 @@ let menu = [];
 const MENU_API =
     "https://script.google.com/macros/s/AKfycbwUxERWkcbCexjpy0lz95zdyHlvCgRhwShcj_PFgXleTfVVinbT7wiaQUa_cU8YiqoXBA/exec";
 
-const PACKAGING_CHARGE = 15;
+const PACKAGING_CHARGE = 20;
 const DELIVERY_CHARGE = 30;
 
 const isMobile = () => window.innerWidth <= 900;
 
 loadMenu();
 
-document
-    .getElementById("deliveryType")
-    .addEventListener("change", () => {
-        syncDeliveryType("desktop");
-        refreshCart();
-    });
-
-document
-    .getElementById("mobileDeliveryType")
-    .addEventListener("change", () => {
-        syncDeliveryType("mobile");
-        refreshCart();
-    });
+//document
+//    .getElementById("deliveryType")
+//    .addEventListener("change", () => {
+//        syncDeliveryType("desktop");
+//        refreshCart();
+//    });
+//
+//document
+//    .getElementById("mobileDeliveryType")
+//    .addEventListener("change", () => {
+//        syncDeliveryType("mobile");
+//        refreshCart();
+//    });
 
 document
     .getElementById("searchBox")
@@ -262,48 +262,48 @@ function buildCartHtml() {
     return { html, subtotal, totalItems };
 }
 
-function syncDeliveryType(source) {
+//function syncDeliveryType(source) {
+//
+//    const desktop =
+//        document.getElementById("deliveryType");
+//
+//    const mobile =
+//        document.getElementById("mobileDeliveryType");
+//
+//    if (source === "mobile") {
+//        desktop.value = mobile.value;
+//    } else {
+//        mobile.value = desktop.value;
+//    }
+//
+//    toggleAddressFields();
+//}
 
-    const desktop =
-        document.getElementById("deliveryType");
-
-    const mobile =
-        document.getElementById("mobileDeliveryType");
-
-    if (source === "mobile") {
-        desktop.value = mobile.value;
-    } else {
-        mobile.value = desktop.value;
-    }
-
-    toggleAddressFields();
-}
-
-function toggleAddressFields() {
-
-    const isDelivery =
-        document.getElementById("deliveryType").value
-            === "delivery";
-
-    const hint = isDelivery
-        ? "Required for delivery orders"
-        : "Optional for pickup — use if you want to share location";
-
-    ["addressGroup", "mobileAddressGroup"].forEach(id => {
-        const group = document.getElementById(id);
-        if (!group) return;
-
-        const label = group.querySelector("label");
-        if (label) {
-            label.innerHTML = isDelivery
-                ? 'Delivery Address <span class="required-tag">required</span>'
-                : 'Delivery Address <span class="optional-tag">optional</span>';
-        }
-
-        const hintEl = group.querySelector(".address-hint");
-        if (hintEl) hintEl.textContent = hint;
-    });
-}
+//function toggleAddressFields() {
+//
+//    const isDelivery =
+//        document.getElementById("deliveryType").value
+//            === "delivery";
+//
+//    const hint = isDelivery
+//        ? "Required for delivery orders"
+//        : "Optional for pickup — use if you want to share location";
+//
+//    ["addressGroup", "mobileAddressGroup"].forEach(id => {
+//        const group = document.getElementById(id);
+//        if (!group) return;
+//
+//        const label = group.querySelector("label");
+//        if (label) {
+//            label.innerHTML = isDelivery
+//                ? 'Delivery Address <span class="required-tag">required</span>'
+//                : 'Delivery Address <span class="optional-tag">optional</span>';
+//        }
+//
+//        const hintEl = group.querySelector(".address-hint");
+//        if (hintEl) hintEl.textContent = hint;
+//    });
+//}
 
 function refreshCart() {
 
@@ -313,59 +313,105 @@ function refreshCart() {
     document.getElementById("cart-items").innerHTML = html;
     document.getElementById("mobile-cart-items").innerHTML = html;
 
-    const pageCart =
-        document.getElementById("page-cart-items");
-
-    if (pageCart) {
-        pageCart.innerHTML = html;
-    }
-
-    const pageFooter =
-        document.getElementById("pageCartFooter");
-
-    if (pageFooter) {
-        pageFooter.hidden = totalItems === 0;
-    }
-
-    const pageCount =
-        document.getElementById("pageCartCount");
-
-    const pageTotal =
-        document.getElementById("pageCartTotal");
-
-    if (pageCount) pageCount.innerText = totalItems;
-
-    if (pageTotal) {
-        const deliveryType =
-            document.getElementById("deliveryType").value;
-
-        const packaging =
-            subtotal > 0 ? PACKAGING_CHARGE : 0;
-
-        const delivery =
-            deliveryType === "delivery" && subtotal > 0
-                ? DELIVERY_CHARGE
-                : 0;
-
-        pageTotal.innerText =
-            subtotal + packaging + delivery;
-    }
+//    const pageCart =
+//        document.getElementById("page-cart-items");
+//
+//    if (pageCart) {
+//        pageCart.innerHTML = html;
+//    }
+//
+//    const pageFooter =
+//        document.getElementById("pageCartFooter");
+//
+//    if (pageFooter) {
+//        pageFooter.hidden = totalItems === 0;
+//    }
+//
+//    const pageCount =
+//        document.getElementById("pageCartCount");
+//
+//    const pageTotal =
+//        document.getElementById("pageCartTotal");
+//
+//    if (pageCount) pageCount.innerText = totalItems;
+//
+//    if (pageTotal) {
+//        const deliveryType =
+//            document.getElementById("deliveryType").value;
+//
+//        const packaging =
+//            subtotal > 0 ? PACKAGING_CHARGE : 0;
+//
+//        const delivery =
+//            deliveryType === "delivery" && subtotal > 0
+//                ? DELIVERY_CHARGE
+//                : 0;
+//
+//        pageTotal.innerText =
+//            subtotal + packaging + delivery;
+//    }
 
     renderMenu();
 
-    const deliveryType =
-        document.getElementById("deliveryType").value;
+    const FREE_DELIVERY_THRESHOLD = 150;
 
     const packaging =
         subtotal > 0 ? PACKAGING_CHARGE : 0;
 
     const delivery =
-        deliveryType === "delivery" && subtotal > 0
+        subtotal > 0 &&
+        subtotal < FREE_DELIVERY_THRESHOLD
             ? DELIVERY_CHARGE
             : 0;
 
     const total =
         subtotal + packaging + delivery;
+
+    const desktopMsg =
+        document.getElementById("deliveryMessage");
+
+    const mobileMsg =
+        document.getElementById("mobileDeliveryMessage");
+
+    let message = "";
+
+    if (
+        subtotal > 0 &&
+        subtotal < FREE_DELIVERY_THRESHOLD
+    ) {
+
+        const remaining =
+            FREE_DELIVERY_THRESHOLD - subtotal;
+
+        message =
+            `🚚 Add ₹${remaining} more to get FREE delivery`;
+
+    } else if (
+        subtotal >= FREE_DELIVERY_THRESHOLD
+    ) {
+
+        message =
+            "🎉 Free delivery applied";
+    }
+
+    const isFreeDelivery =
+        subtotal >= FREE_DELIVERY_THRESHOLD;
+
+    if (desktopMsg) {
+        desktopMsg.innerText = message;
+        desktopMsg.className =
+            isFreeDelivery
+                ? "delivery-message success"
+                : "delivery-message warning";
+    }
+
+    if (mobileMsg) {
+        mobileMsg.innerText = message;
+        mobileMsg.className =
+            isFreeDelivery
+                ? "delivery-message success"
+                : "delivery-message warning";
+    }
 
     const amounts = {
         subtotal,
@@ -391,17 +437,16 @@ function refreshCart() {
     const cartBar =
         document.getElementById("mobileCartBar");
 
-    if (totalItems === 0) {
-        cartBar.classList.add("is-empty");
-        cartBar.querySelector(".cart-bar-cta").textContent =
-            "Add items to order";
-    } else {
-        cartBar.classList.remove("is-empty");
-        cartBar.querySelector(".cart-bar-cta").textContent =
-            "View Cart →";
+    cartBar.hidden =
+        totalItems === 0;
+
+    if (totalItems > 0) {
+
+        cartBar.querySelector(".cart-bar-cta")
+            .textContent = "View Cart →";
     }
 
-    toggleAddressFields();
+//    toggleAddressFields();
 }
 
 function openMobileCheckout() {
@@ -456,8 +501,7 @@ function placeOrder(fromMobile = false) {
         return;
     }
 
-    const isDelivery =
-        document.getElementById("deliveryType").value === "delivery";
+    const isDelivery = true;
 
     if (isDelivery && !customer.address) {
         alert("Please enter your delivery address or use current location.");
@@ -513,7 +557,7 @@ function getCurrentLocation(fromMobile = false) {
     }
 
     const btnIds = fromMobile
-        ? ["mobileLocationBtn", "pageLocationBtn"]
+        ? ["mobileLocationBtn"]
         : ["locationBtn"];
 
     const btns = btnIds
@@ -592,3 +636,4 @@ function setLocationStatus(text, type, fromMobile) {
         el.className = "field-hint" + (type ? " " + type : "");
     });
 }
+
